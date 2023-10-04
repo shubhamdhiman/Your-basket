@@ -3,13 +3,16 @@ import React,{useEffect, useState} from 'react'
 function Item({item ,changeData,data}) {
     const [cost,setCost]  = useState(item.cost)
     const [quantity,setQuantity] = useState(1)
+
+    
     useEffect(()=>{
         setCost(item.price*quantity)
     },[quantity])
     useEffect(()=>{
         updateItemCost()
-
     },[cost])
+
+
     function updateItemCost() {
         const updatedData = data.map((itemData) => {
             if (itemData.name === item.name) {
@@ -27,13 +30,11 @@ function Item({item ,changeData,data}) {
          if(val === "increase"){
             setQuantity(prev=>prev+1)
             
-            // updateItemCost()
         }else if(val === "decrease"){
             if(quantity===1){
                 return;
             }
             setQuantity(prev=>prev-1)
-            // updateItemCost()
         }
     }
   return (

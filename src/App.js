@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react";
-import "./App.css";
-import Item from "./Item";
-import FinalDiv from "./FinalDiv";
+import "./CSS/App.css";
+import Item from "./Components/Item";
+import FinalDiv from "./Components/FinalDiv";
+import { dummyData } from "./Utils/utils";
 
 function App() {
-  const [data, setData] = useState([
-    {
-      name: "Cotton T-shirt Medium",
-      price: 400,
-      cost: 400,
-    },
-    {
-      name: "Base Ball Cap One Size",
-      price: 600,
-      cost: 600,
-    },
-    {
-      name: "Swim Shorts Medium",
-      price: 700,
-      cost: 700,
-    },
-  ]);
   const [total, setTotal] = useState(0);
   const [withVAT, setWithVat] = useState(0);
   const [afterVAT, setafterVAT] = useState(0);
+  const [data, setData] = useState(dummyData);
+
   useEffect(() => {
     function findTotal() {
       const totalAmount = data?.reduce((acc, itr) => {
@@ -33,6 +19,7 @@ function App() {
     }
     findTotal();
   }, [data]);
+
   useEffect(() => {
     function withVATFunc() {
       const withVATAmount = total * 0.18;
@@ -40,6 +27,7 @@ function App() {
     }
     withVATFunc();
   }, [total]);
+
   useEffect(() => {
     function afterVAT() {
       const afterVATAmount = total + withVAT;
@@ -47,6 +35,7 @@ function App() {
     }
     afterVAT();
   }, [withVAT]);
+
   return (
     <div className="App">
       <h1 className="text-7xl font-bold mb-4"> Your basket</h1>
@@ -67,11 +56,8 @@ function App() {
         return <Item key={item.name} item={item} changeData={setData} data={data}/>;
       })}
       <FinalDiv name="Subtotal" amount={total} />
-      <FinalDiv name="VAT@18%" amount={withVAT} />
-      <div className="flex justify-between mt-12 mx-12">
-        <p className="text-2xl ">Total</p>
-        <p className="text-2xl ">{afterVAT} Rs</p>
-      </div>
+      <FinalDiv name="VAT@18%" amount={withVAT} /> 
+      <FinalDiv name="Total" amount={afterVAT} /> 
       <div className="flex justify-end mr-8 mb-8 ">
         <button className="bg-blue-700 rounded-md py-4 px-6 mt-12  text-3xl text-white font-bold shadow-2xl">
           Buy Now
